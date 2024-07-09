@@ -38,14 +38,9 @@ public class UniversityStudentManagementSystem {
                 viewStudentsByName();
                 break;
             case '8':
-                manageStudentResults(scanner);
+                ManageResults();
                 break;
-            case 'C':
-                generateSystemSummary();
-                break;
-            case 'D':
-                generateCompleteReport();
-                break;
+            
             case '0':
                 System.out.println("Exiting the program...");
                 break;
@@ -66,12 +61,33 @@ public class UniversityStudentManagementSystem {
         System.out.println("6. Load student details from the file to the system");
         System.out.println("7. View the list of students based on their names");
         System.out.println("8. Manage student results");
-        System.out.println("C. Generate system summary");
-        System.out.println("D. Generate complete report");
         System.out.println("0. Exit");
         System.out.print("Enter your choice ");
     }
+    private static void ManageResults(){
+        System.out.println("A. Add student name");
+        System.out.println("B. Module marks 1, 2 and 3");
+        System.out.println("C. Generate system summary");
+        System.out.println("D. Generate complete report");
+        System.out.print("Enter your choice ");
+        Scanner scanner = new Scanner(System.in);
 
+        String choice = scanner.nextLine();
+        switch (choice) {
+            case "A":
+                updateStudentName(scanner);
+                break;
+            case "B":
+                manageStudentResults(scanner);
+                break;
+            case "C":
+                generateSystemSummary();
+                break;
+            case "D":
+                generateCompleteReport();
+                break;
+        }
+    }
 
     private static void generateSystemSummary() {
         System.out.println("System Summary");
@@ -374,6 +390,22 @@ private static void mergeStudents(Student[] students, int left, int mid, int rig
 
         System.out.println("Student results updated successfully.");
     }
+    private static void updateStudentName(Scanner scanner) {
+    System.out.print("Enter student ID: ");
+    String id = scanner.nextLine();
+
+    Student student = findStudentByID(id);
+    if (student == null) {
+        System.out.println("Student not found.");
+        return;
+    }
+
+    System.out.print("Enter new name: ");
+    String newName = scanner.nextLine();
+    student.setName(newName);
+
+    System.out.println("Student name updated successfully.");
+}
 
     private static Student findStudentByID(String studentId) {
         for (int i = 0; i < numStudents; i++) {
@@ -402,6 +434,9 @@ class Student {
 
     public String getName() {
         return name;
+    }
+    public void setName(String name){
+        this.name=name;
     }
 
     public void setModuleMarks(int module1Marks, int module2Marks, int module3Marks) {
